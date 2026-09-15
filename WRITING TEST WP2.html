@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Picken-glish Aviation — OACI ESL Level 1 · Writing Test</title>
+<style>
+  :root{
+    --violet:#5b4b8a;
+    --violet-dark:#3d3161;
+    --violet-deep:#2a2144;
+    --violet-light:#8a78b8;
+    --violet-soft:#b8a8dc;
+    --violet-bg:#f4f1fa;
+    --violet-pale:#e8e2f5;
+    --silver:#c9c9d4;
+    --silver-dark:#8e8e9e;
+    --gold:#d4af37;
+    --gold-dark:#b8941f;
+    --green:#28c76f;
+    --red:#ea5455;
+    --amber:#f5a623;
+    --ink:#1e1a2e;
+    --paper:#f8f6fc;
+    --card:#ffffff;
+    --muted:#7a7488;
+    --radius:16px;
+    --shadow:0 8px 28px rgba(91,75,138,0.14);
+    --shadow-strong:0 12px 40px rgba(91,75,138,0.22);
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--paper);color:var(--ink);min-height:100vh;}
+
+  header.exam-header{
+    background:linear-gradient(135deg,var(--violet-deep) 0%, var(--violet-dark) 55%, var(--violet) 100%);
+    color:#fff;padding:14px 18px;position:sticky;top:0;z-index:50;
+    box-shadow:0 4px 20px rgba(42,33,68,.35);
+    border-bottom:2px solid var(--gold);
+  }
+  .header-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  .brand-block{display:flex;align-items:center;gap:12px;}
+  .brand-logo{
+    width:48px;height:48px;border-radius:50%;
+    background:linear-gradient(135deg,#f7d97a 0%, var(--gold) 50%, var(--gold-dark) 100%);
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    box-shadow:0 0 0 3px rgba(255,255,255,.25), 0 0 0 5px rgba(212,175,55,.35), 0 6px 18px rgba(0,0,0,.35);
+    flex-shrink:0;color:#3d2f00;text-shadow:0 1px 0 rgba(255,255,255,.4);
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.1;}
+  .brand-name{
+    font-size:15px;font-weight:900;letter-spacing:.4px;
+    background:linear-gradient(90deg,#fff 0%, var(--silver) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .brand-sub{font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--violet-soft);text-transform:uppercase;margin-top:2px;}
+
+  .header-meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .timer-block{display:flex;flex-direction:column;align-items:flex-end;}
+  .timer-label{font-size:9.5px;font-weight:800;letter-spacing:1.5px;color:var(--violet-soft);text-transform:uppercase;}
+  .timer-display{
+    font-size:26px;font-weight:900;letter-spacing:1px;font-variant-numeric:tabular-nums;
+    color:#fff;text-shadow:0 0 12px rgba(212,175,55,.4);line-height:1;
+  }
+  .timer-display.warning{color:var(--amber);text-shadow:0 0 14px rgba(245,166,35,.6);}
+  .timer-display.danger{color:var(--red);text-shadow:0 0 16px rgba(234,84,85,.7);animation:pulseTimer 1s infinite;}
+  @keyframes pulseTimer{0%,100%{opacity:1;}50%{opacity:.5;}}
+
+  .attempt-pill{
+    background:rgba(255,255,255,0.12);border:1px solid rgba(212,175,55,.4);
+    padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;
+    letter-spacing:.5px;color:var(--gold);text-transform:uppercase;
+  }
+
+  .runway-bar{max-width:1180px;margin:0 auto;padding:12px 18px 8px;}
+  .runway-track{position:relative;height:8px;background:var(--violet-pale);border-radius:8px;overflow:visible;}
+  .runway-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--violet-light),var(--violet));border-radius:8px;transition:width .5s ease;}
+  .runway-plane{
+    position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);
+    width:26px;height:26px;font-size:15px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:#3d2f00;border-radius:50%;
+    box-shadow:0 3px 10px rgba(91,75,138,.4);transition:left .5s ease;border:2px solid #fff;font-weight:900;
+  }
+  .runway-labels{display:flex;justify-content:space-between;font-size:10px;font-weight:800;letter-spacing:1px;color:var(--muted);margin-top:6px;text-transform:uppercase;}
+
+  .screen{display:none;animation:fadeIn .4s ease;}
+  .screen.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  main{max-width:1180px;margin:0 auto;padding:26px 18px 70px;}
+
+  /* COVER */
+  .cover-wrap{max-width:740px;margin:0 auto;text-align:center;}
+  .cover-card{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-strong);
+    padding:44px 36px;position:relative;overflow:hidden;border-top:4px solid var(--gold);
+  }
+  .cover-card::before{
+    content:"";position:absolute;top:-50%;right:-20%;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(138,120,184,.12),transparent 70%);pointer-events:none;
+  }
+  .cover-logo{
+    width:100px;height:100px;margin:0 auto 22px;border-radius:50%;
+    background:linear-gradient(135deg,#f7d97a 0%, var(--gold) 45%, var(--gold-dark) 100%);
+    display:flex;align-items:center;justify-content:center;font-size:50px;
+    box-shadow:0 10px 30px rgba(212,175,55,.5), 0 0 0 6px rgba(91,75,138,.15), 0 0 0 10px rgba(212,175,55,.2);
+    color:#3d2f00;text-shadow:0 2px 0 rgba(255,255,255,.4);
+  }
+  .cover-badge{
+    display:inline-block;background:var(--violet-pale);color:var(--violet-dark);
+    font-size:11px;font-weight:900;letter-spacing:1.5px;padding:7px 16px;border-radius:20px;
+    text-transform:uppercase;margin-bottom:16px;
+  }
+  .cover-title{
+    font-size:clamp(24px,4.6vw,36px);font-weight:900;color:var(--violet-dark);
+    line-height:1.15;margin-bottom:8px;letter-spacing:-.5px;
+  }
+  .cover-sub{font-size:14px;color:var(--muted);margin-bottom:30px;font-weight:600;}
+
+  .cover-info{
+    background:var(--violet-bg);border-radius:14px;padding:24px 26px;margin-bottom:26px;text-align:left;
+    border-left:4px solid var(--violet);
+  }
+  .cover-info h4{
+    font-size:12px;font-weight:900;letter-spacing:1.8px;color:var(--violet-dark);
+    text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;
+    border-bottom:1px solid rgba(91,75,138,.15);
+  }
+  .cover-info ol{list-style:none;counter-reset:inst;}
+  .cover-info ol li{
+    counter-increment:inst;
+    font-size:14px;color:var(--ink);padding:11px 0 11px 42px;position:relative;
+    line-height:1.5;font-weight:500;
+    border-bottom:1px dashed rgba(91,75,138,.12);
+  }
+  .cover-info ol li:last-child{border-bottom:none;padding-bottom:0;}
+  .cover-info ol li::before{
+    content:counter(inst);position:absolute;left:0;top:10px;
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-dark) 100%);
+    color:#fff;font-size:12px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 3px 8px rgba(91,75,138,.3);
+  }
+  .cover-info strong{color:var(--violet-dark);font-weight:900;}
+
+  .field-group{margin-bottom:18px;text-align:left;}
+  .field-group label{
+    display:block;font-size:11px;font-weight:900;letter-spacing:1.5px;
+    color:var(--violet-dark);text-transform:uppercase;margin-bottom:8px;
+  }
+  .field-group input{
+    width:100%;padding:14px 18px;border:2px solid var(--violet-pale);border-radius:12px;
+    font-size:15px;font-family:inherit;color:var(--ink);background:var(--paper);
+    transition:.2s;font-weight:600;
+  }
+  .field-group input:focus{outline:none;border-color:var(--violet);background:#fff;box-shadow:0 0 0 4px rgba(91,75,138,.1);}
+  .field-group input.error{border-color:var(--red);background:#fef5f5;}
+
+  .password-wrap{position:relative;}
+  .password-wrap input{padding-right:50px;}
+  .password-toggle{
+    position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted);
+    padding:4px;line-height:1;
+  }
+  .password-toggle:hover{color:var(--violet);}
+
+  .error-msg{color:var(--red);font-size:12px;font-weight:700;margin-top:6px;display:none;}
+  .error-msg.show{display:block;}
+
+  .btn-primary{
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-dark) 100%);
+    color:#fff;border:none;padding:16px 36px;border-radius:12px;font-size:15px;font-weight:900;
+    letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.2s;
+    box-shadow:0 6px 20px rgba(91,75,138,.35);width:100%;
+  }
+  .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(91,75,138,.45);}
+  .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+  .attempt-note{margin-top:16px;font-size:12px;color:var(--muted);font-weight:600;}
+  .attempt-note strong{color:var(--violet-dark);}
+
+  /* EXAM */
+  .exam-wrap{max-width:880px;margin:0 auto;}
+  .part-header{display:flex;align-items:center;gap:14px;margin-bottom:8px;padding:0 4px;}
+  .part-pill{
+    background:var(--violet);color:#fff;font-size:11px;font-weight:900;letter-spacing:1.5px;
+    padding:6px 14px;border-radius:20px;text-transform:uppercase;flex-shrink:0;
+  }
+  .part-title{font-size:16px;font-weight:900;color:var(--violet-dark);}
+  .part-desc{color:var(--muted);font-size:13px;margin:0 0 20px;padding:0 4px;font-weight:600;}
+
+  .question-card{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:28px 26px;margin-bottom:18px;border-left:4px solid var(--violet-light);
+    transition:.3s;
+  }
+  .question-card.answered{border-left-color:var(--violet);}
+
+  .q-number{
+    display:inline-block;font-size:11px;font-weight:900;letter-spacing:1.5px;
+    color:var(--violet);text-transform:uppercase;margin-bottom:10px;
+  }
+  .q-text{font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:8px;}
+  .q-hint{
+    font-size:12.5px;color:var(--muted);font-style:italic;margin-bottom:14px;
+    padding-left:12px;border-left:2px solid var(--violet-pale);
+  }
+  .q-passage{
+    background:var(--violet-bg);border-radius:12px;padding:16px 18px;margin-bottom:16px;
+    font-size:14px;line-height:1.65;color:var(--ink);font-style:italic;
+    border-left:3px solid var(--gold);
+  }
+  .q-instructions{
+    background:#fff9e6;border-radius:10px;padding:14px 16px;margin-bottom:14px;
+    font-size:13.5px;color:#6b5500;border-left:3px solid var(--gold);font-weight:600;
+  }
+  .q-instructions strong{color:#3d2f00;}
+
+  .options-list{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    background:var(--paper);border:2px solid var(--violet-pale);border-radius:12px;
+    padding:14px 18px;font-size:14.5px;font-weight:600;color:var(--ink);
+    cursor:pointer;transition:.15s;display:flex;align-items:center;gap:12px;
+  }
+  .option:hover{border-color:var(--violet-light);background:#fff;}
+  .option.selected{border-color:var(--violet);background:linear-gradient(90deg,var(--violet-bg),#fff);}
+  .option.selected::before{content:"●";color:var(--violet);font-size:16px;font-weight:900;flex-shrink:0;}
+  .option:not(.selected)::before{content:"○";color:var(--silver-dark);font-size:16px;font-weight:900;flex-shrink:0;}
+
+  .open-input{
+    width:100%;padding:14px 16px;border:2px solid var(--violet-pale);border-radius:12px;
+    font-size:14.5px;font-family:inherit;color:var(--ink);background:var(--paper);
+    transition:.2s;resize:vertical;min-height:70px;line-height:1.5;
+  }
+  .open-input:focus{outline:none;border-color:var(--violet);background:#fff;box-shadow:0 0 0 4px rgba(91,75,138,.1);}
+  .open-input.paragraph{min-height:170px;font-size:15px;}
+
+  .word-count{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11.5px;color:var(--muted);font-weight:700;margin-top:8px;
+    padding:0 4px;
+  }
+  .word-count .wc-value{color:var(--violet-dark);font-weight:900;}
+  .word-count .wc-value.ok{color:var(--green);}
+  .word-count .wc-value.low{color:var(--amber);}
+
+  .unscramble-words{
+    display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
+  }
+  .scramble-chip{
+    background:var(--violet-bg);color:var(--violet-dark);border:2px solid var(--violet-pale);
+    padding:8px 14px;border-radius:20px;font-size:13.5px;font-weight:700;
+    cursor:pointer;transition:.15s;user-select:none;
+  }
+  .scramble-chip:hover{border-color:var(--violet);background:#fff;}
+  .scramble-chip.used{opacity:.35;cursor:not-allowed;text-decoration:line-through;}
+
+  .scramble-answer{
+    min-height:52px;background:var(--paper);border:2px dashed var(--violet-pale);
+    border-radius:12px;padding:12px 14px;font-size:14.5px;font-weight:600;
+    color:var(--ink);display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+  }
+  .scramble-answer.filled{border-style:solid;border-color:var(--violet-light);background:#fff;}
+  .scramble-answer .placeholder{color:var(--silver-dark);font-style:italic;font-weight:500;}
+
+  .exam-nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px;padding:0 4px;}
+  .btn-nav{
+    background:var(--paper);color:var(--violet-dark);border:2px solid var(--violet-pale);
+    padding:13px 26px;border-radius:12px;font-size:13.5px;font-weight:900;
+    letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:.15s;
+  }
+  .btn-nav:hover:not(:disabled){border-color:var(--violet);background:#fff;}
+  .btn-nav:disabled{opacity:.35;cursor:not-allowed;}
+  .btn-nav.primary{
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-dark) 100%);
+    color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(91,75,138,.3);
+  }
+  .btn-nav.primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,75,138,.4);}
+  .btn-nav.finish{background:linear-gradient(135deg,var(--gold) 0%, var(--gold-dark) 100%);color:#3d2f00;border-color:transparent;}
+
+  /* RESULT */
+  .result-wrap{max-width:720px;margin:0 auto;}
+  .boarding-pass{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-strong);
+    overflow:hidden;border-top:6px solid var(--gold);
+  }
+  .bp-header{
+    background:linear-gradient(135deg,var(--violet-deep) 0%, var(--violet-dark) 100%);
+    color:#fff;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;
+  }
+  .bp-header h2{font-size:18px;font-weight:900;letter-spacing:1px;margin:0;}
+  .bp-header p{font-size:11px;letter-spacing:1.5px;color:var(--violet-soft);text-transform:uppercase;margin-top:4px;}
+  .bp-header-logo{font-size:32px;color:var(--gold);}
+
+  .bp-body{padding:28px;}
+  .bp-score-section{text-align:center;padding:24px 0;border-bottom:2px dashed var(--violet-pale);}
+  .bp-medal{font-size:72px;line-height:1;margin-bottom:8px;}
+  .bp-medal-label{font-size:12px;font-weight:900;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
+  .bp-score-big{
+    font-size:64px;font-weight:900;line-height:1;
+    background:linear-gradient(135deg,var(--violet) 0%, var(--violet-dark) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    margin-bottom:6px;
+  }
+  .bp-score-sub{font-size:13px;color:var(--muted);font-weight:700;}
+
+  .bp-details{padding-top:22px;}
+  .bp-detail-row{
+    display:flex;justify-content:space-between;padding:11px 0;
+    border-bottom:1px solid var(--violet-pale);font-size:13.5px;
+  }
+  .bp-detail-row:last-child{border-bottom:none;}
+  .bp-detail-label{font-weight:700;color:var(--ink);}
+  .bp-detail-value{font-weight:900;color:var(--violet-dark);font-variant-numeric:tabular-nums;}
+
+  .bp-note{
+    background:#fff9e6;border-radius:10px;padding:14px 16px;margin-top:14px;
+    font-size:12.5px;color:#6b5500;border-left:3px solid var(--gold);font-weight:600;
+  }
+  .bp-note strong{color:#3d2f00;}
+
+  .bp-name-row{
+    background:var(--violet-bg);border-radius:12px;padding:14px 18px;margin-top:18px;
+    display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .bp-name-label{font-size:10px;font-weight:900;letter-spacing:1.5px;color:var(--violet-dark);text-transform:uppercase;}
+  .bp-name-value{font-size:15px;font-weight:900;color:var(--ink);}
+
+  .result-actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+  .result-actions button{flex:1 1 200px;}
+
+  .attempts-history{margin-top:22px;background:var(--violet-bg);border-radius:12px;padding:16px;}
+  .attempts-history h4{
+    font-size:11px;font-weight:900;letter-spacing:1.5px;color:var(--violet-dark);
+    text-transform:uppercase;margin-bottom:10px;
+  }
+  .attempt-row{
+    display:flex;justify-content:space-between;padding:8px 0;
+    font-size:13px;font-weight:700;color:var(--ink);
+    border-bottom:1px solid rgba(91,75,138,.15);
+  }
+  .attempt-row:last-child{border-bottom:none;padding-bottom:0;}
+  .best-tag{
+    background:var(--gold);color:#3d2f00;font-size:10px;font-weight:900;
+    padding:2px 8px;border-radius:10px;letter-spacing:.5px;margin-left:8px;
+  }
+
+  .modal-overlay{
+    position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(30,26,46,.75);
+    display:none;align-items:center;justify-content:center;z-index:100;padding:20px;
+  }
+  .modal-overlay.active{display:flex;animation:fadeIn .3s ease;}
+  .modal-box{
+    background:var(--card);border-radius:var(--radius);padding:32px 28px;
+    max-width:460px;width:100%;box-shadow:var(--shadow-strong);text-align:center;
+  }
+  .modal-icon{font-size:52px;margin-bottom:14px;}
+  .modal-box h3{font-size:20px;font-weight:900;color:var(--violet-dark);margin-bottom:10px;}
+  .modal-box p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px;font-weight:600;}
+  .modal-actions{display:flex;gap:12px;}
+  .modal-actions button{flex:1;padding:13px;border-radius:12px;font-weight:900;font-size:13.5px;cursor:pointer;transition:.15s;letter-spacing:.5px;text-transform:uppercase;}
+  .modal-cancel{background:var(--paper);color:var(--violet-dark);border:2px solid var(--violet-pale);}
+  .modal-cancel:hover{border-color:var(--violet);}
+  .modal-confirm{background:var(--red);color:#fff;border:none;}
+  .modal-confirm:hover{background:#c53030;}
+  .modal-confirm.gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#3d2f00;}
+
+  footer.exam-footer{text-align:center;padding:24px 18px;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:.5px;}
+  footer.exam-footer strong{color:var(--violet-dark);}
+
+  @media(max-width:640px){
+    .header-meta{gap:10px;}
+    .timer-display{font-size:22px;}
+    .cover-card{padding:32px 22px;}
+    .question-card{padding:22px 18px;}
+    .bp-body{padding:20px;}
+    .cover-logo{width:80px;height:80px;font-size:40px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="exam-header">
+  <div class="header-inner">
+    <div class="brand-block">
+      <div class="brand-logo">✈</div>
+      <div class="brand-text">
+        <div class="brand-name">Picken-glish Aviation</div>
+        <div class="brand-sub">OACI ESL Level 1 · Writing</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="attempt-pill" id="attemptPill">Attempt 1 of 2</div>
+      <div class="timer-block">
+        <div class="timer-label">Time Remaining</div>
+        <div class="timer-display" id="timerDisplay">40:00</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="runway-bar" id="runwayBar" style="display:none;">
+  <div class="runway-track">
+    <div class="runway-fill" id="runwayFill"></div>
+    <div class="runway-plane" id="runwayPlane">✈</div>
+  </div>
+  <div class="runway-labels">
+    <span>START</span>
+    <span id="runwayProgress">0 / 23</span>
+  </div>
+</div>
+
+<main>
+
+  <section class="screen active" id="screen-cover">
+    <div class="cover-wrap">
+      <div class="cover-card">
+        <div class="cover-logo">✍</div>
+        <div class="cover-badge">OACI ESL Level 1 Certification</div>
+        <h1 class="cover-title">Writing Test</h1>
+        <p class="cover-sub">Aviation English Assessment · 23 Items · 40 Minutes</p>
+
+        <div class="cover-info">
+          <h4>Instructions</h4>
+          <ol>
+            <li>You have <strong>40 continuous minutes</strong> to complete the test.</li>
+            <li>You have <strong>2 attempts</strong> — your best score will be recorded.</li>
+            <li>The test has <strong>5 parts</strong>: Complete the sentence, Unscramble, Short Answer, Correct the Mistake, and Write a Paragraph.</li>
+            <li>Write in <strong>English</strong>. Spelling counts.</li>
+            <li>You will see your score <strong>only at the end</strong>. The final paragraph will be graded by your teacher.</li>
+          </ol>
+        </div>
+
+        <div class="field-group">
+          <label for="studentName">Student Name</label>
+          <input type="text" id="studentName" placeholder="Type your full name here..." autocomplete="off">
+          <div class="error-msg" id="nameError">Please enter your name to continue.</div>
+        </div>
+
+        <div class="field-group">
+          <label for="examPassword">Exam Password</label>
+          <div class="password-wrap">
+            <input type="password" id="examPassword" placeholder="Enter the password provided by your teacher" autocomplete="off">
+            <button class="password-toggle" id="passwordToggle" type="button">👁</button>
+          </div>
+          <div class="error-msg" id="passwordError">Incorrect password. Please check with your teacher.</div>
+        </div>
+
+        <button class="btn-primary" id="startBtn">▶ Start Writing Test</button>
+        <div class="attempt-note" id="coverAttemptNote">This will be your <strong>1st attempt</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-exam">
+    <div class="exam-wrap">
+      <div id="examContent"></div>
+      <div class="exam-nav">
+        <button class="btn-nav" id="prevBtn" disabled>← Previous</button>
+        <button class="btn-nav primary" id="nextBtn">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-result">
+    <div class="result-wrap">
+      <div class="boarding-pass">
+        <div class="bp-header">
+          <div>
+            <h2>BOARDING PASS · RESULT</h2>
+            <p>Picken-glish Aviation</p>
+          </div>
+          <div class="bp-header-logo">✈</div>
+        </div>
+        <div class="bp-body" id="bpBody"></div>
+      </div>
+      <div class="result-actions" id="resultActions"></div>
+      <div class="attempts-history" id="attemptsHistory"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="exam-footer">
+  <strong>Picken-glish Aviation</strong> · OACI ESL Level 1 · Writing Assessment · © <span id="year"></span>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <h3 id="modalTitle">Are you sure?</h3>
+    <p id="modalText">This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="modalCancel">Cancel</button>
+      <button class="modal-confirm" id="modalConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   PICKEN-GLISH AVIATION — OACI ESL LEVEL 1 WRITING TEST
+   ========================================================== */
+
+const CONFIG = {
+  EXAM_PASSWORD: 'PICKEN2026',
+  EXAM_DURATION_MIN: 40,
+  MAX_ATTEMPTS: 2,
+  STORAGE_KEY: 'picken_writing_attempts_v1',
+  MIN_PARAGRAPH_WORDS: 25
+};
+
+/* ==========================================================
+   QUESTION BANK — Writing Test
+   Total items: 6 + 5 + 6 + 5 + 1 = 23
+   ========================================================== */
+const QUESTION_BANK = {
+  part1: {
+    title: 'Part 1 — Complete the Sentence',
+    desc: 'Write ONE word to complete each sentence correctly.',
+    questions: [
+      { id: 'w1q1', type: 'text', q: '___ is responsible for the flight? (WHO / WHERE)', hint: 'Talking about a person.', accepted: ['who'], answer: 'WHO' },
+      { id: 'w1q2', type: 'text', q: '___ is Flight 5 now? — It is on Taxiway Bravo.', hint: 'Asking for a location.', accepted: ['where'], answer: 'WHERE' },
+      { id: 'w1q3', type: 'text', q: 'There are ___ passengers in the cabin today. (many / much)', hint: 'Passengers are countable.', accepted: ['many'], answer: 'many' },
+      { id: 'w1q4', type: 'text', q: 'We do not have ___ fuel for the flight. (many / much)', hint: 'Fuel is uncountable.', accepted: ['much'], answer: 'much' },
+      { id: 'w1q5', type: 'text', q: 'The Airbus A380 is ___ (large) than the Boeing 737.', hint: 'Comparative form.', accepted: ['larger'], answer: 'larger' },
+      { id: 'w1q6', type: 'text', q: 'That is ___ (good) landing I have ever seen.', hint: 'Superlative irregular.', accepted: ['the best', 'best'], answer: 'the best' }
+    ]
+  },
+  part2: {
+    title: 'Part 2 — Unscramble the Sentence',
+    desc: 'Click the words in the correct order to build a complete sentence.',
+    questions: [
+      { id: 'w2q1', type: 'scramble', q: 'Build a present progressive sentence about the crew.', words: ['The', 'cabin', 'crew', 'is', 'loading', 'baggage'], answer: 'The cabin crew is loading baggage' },
+      { id: 'w2q2', type: 'scramble', q: 'Build a simple present sentence about the pilot.', words: ['The', 'pilot', 'always', 'checks', 'the', 'oxygen', 'mask'], answer: 'The pilot always checks the oxygen mask' },
+      { id: 'w2q3', type: 'scramble', q: 'Build a question with WHERE.', words: ['Where', 'is', 'the', 'aircraft', 'now'], answer: 'Where is the aircraft now' },
+      { id: 'w2q4', type: 'scramble', q: 'Build a comparative sentence.', words: ['Modern', 'engines', 'are', 'more', 'efficient', 'than', 'old', 'engines'], answer: 'Modern engines are more efficient than old engines' },
+      { id: 'w2q5', type: 'scramble', q: 'Build a sentence with an object pronoun.', words: ['The', 'passenger', 'needs', 'help', 'please', 'assist', 'him'], answer: 'The passenger needs help please assist him' }
+    ]
+  },
+  part3: {
+    title: 'Part 3 — Short Answer',
+    desc: 'Answer each question with ONE complete sentence in English.',
+    questions: [
+      { id: 'w3q1', type: 'open', q: 'Who is the pilot of Flight 5?', keywords: ['pilot', 'peterson'], model: 'Captain Peterson is the pilot of Flight 5.' },
+      { id: 'w3q2', type: 'open', q: 'Where is Flight 5 now?', keywords: ['taxiway', 'bravo'], model: 'Flight 5 is on Taxiway Bravo.' },
+      { id: 'w3q3', type: 'open', q: 'Why is Flight 5 delayed?', keywords: ['weather', 'fog'], model: 'Flight 5 is delayed because of bad weather.' },
+      { id: 'w3q4', type: 'open', q: 'When is the boarding time?', keywords: ['14:30', '1430', 'utc'], model: 'The boarding time is at 14:30 UTC.' },
+      { id: 'w3q5', type: 'open', q: 'What is the cabin crew doing right now?', keywords: ['loading', 'baggage'], model: 'The cabin crew is loading the baggage.' },
+      { id: 'w3q6', type: 'open', q: 'Which is bigger, the A380 or the Boeing 737?', keywords: ['a380', 'bigger', 'larger'], model: 'The A380 is bigger than the Boeing 737.' }
+    ]
+  },
+  part4: {
+    title: 'Part 4 — Correct the Mistake',
+    desc: 'Rewrite each sentence correcting the mistake. Write the FULL corrected sentence.',
+    questions: [
+      { id: 'w4q1', type: 'correct', q: 'The pilot are boarding the plane.', keywords: ['pilot is'], forbidden: ['pilot are'], model: 'The pilot is boarding the plane.' },
+      { id: 'w4q2', type: 'correct', q: 'She have many baggage in the cabin.', keywords: ['has', 'much', 'luggage', 'baggage'], forbidden: ['have many'], model: 'She has much baggage in the cabin.' },
+      { id: 'w4q3', type: 'correct', q: 'Where is going the airplane?', keywords: ['where is the airplane going', 'where is the aircraft going', 'where is the plane going'], model: 'Where is the airplane going?' },
+      { id: 'w4q4', type: 'correct', q: 'This is the most heavy plane in the fleet.', keywords: ['the heaviest'], forbidden: ['most heavy'], model: 'This is the heaviest plane in the fleet.' },
+      { id: 'w4q5', type: 'correct', q: 'The flight attendants is serving drinks right now.', keywords: ['attendants are'], forbidden: ['attendants is'], model: 'The flight attendants are serving drinks right now.' }
+    ]
+  },
+  part5: {
+    title: 'Part 5 — Write a Paragraph',
+    desc: 'Write a short paragraph of 5–6 sentences about a day at the airport. This section will be graded by your teacher.',
+    questions: [
+      {
+        id: 'w5q1',
+        type: 'paragraph',
+        q: 'Write about "A day at the airport".',
+        instructions: 'Your paragraph MUST include:',
+        bullets: [
+          'At least <strong>5 sentences</strong> (minimum 25 words)',
+          'The <strong>name of a flight</strong> (e.g., "Flight 5")',
+          'A <strong>WH- question word</strong> (Who / Where / When / What / Why)',
+          'At least <strong>one verb</strong> in present progressive (is/are + -ing)',
+          'At least <strong>one quantifier</strong> (many, much, some, a few, a little)',
+          'One sentence with an <strong>object pronoun</strong> (him, her, it, them, us)'
+        ],
+        starter: 'Flight 5 is at the airport today. '
+      }
+    ]
+  }
+};
+
+/* ==========================================================
+   STATE
+   ========================================================== */
+let state = {
+  studentName: '',
+  attempt: 1,
+  questions: [],
+  answers: {},
+  currentIndex: 0,
+  timeLeft: CONFIG.EXAM_DURATION_MIN * 60,
+  timerInterval: null,
+  startTime: null,
+  isFinishing: false
+};
+
+/* ==========================================================
+   UTILIDADES
+   ========================================================== */
+function shuffleArray(arr){
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(str){
+  return (str || '').toString().toLowerCase()
+    .replace(/[.,!?;:¿¡"'()\-]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function countWords(str){
+  const n = normalize(str);
+  return n ? n.split(' ').length : 0;
+}
+
+function formatTime(seconds){
+  if(seconds < 0) seconds = 0;
+  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const s = (seconds % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function getAttempts(){
+  try{
+    return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)) || [];
+  }catch(e){ return []; }
+}
+
+function saveAttempt(data){
+  try{
+    const all = getAttempts();
+    all.push(data);
+    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(all));
+  }catch(e){
+    console.warn('localStorage error:', e);
+  }
+}
+
+/* ==========================================================
+   BUILD QUESTIONS
+   ========================================================== */
+function buildQuestions(){
+  const all = [];
+  Object.keys(QUESTION_BANK).forEach(partKey => {
+    const part = QUESTION_BANK[partKey];
+    part.questions.forEach(q => {
+      const item = { ...q, partKey, partTitle: part.title, partDesc: part.desc };
+      if(q.words) item.shuffledWords = shuffleArray(q.words);
+      all.push(item);
+    });
+  });
+  // Shuffle inside parts but keep part order intact for pedagogical flow
+  const grouped = {};
+  all.forEach(item => {
+    if(!grouped[item.partKey]) grouped[item.partKey] = [];
+    grouped[item.partKey].push(item);
+  });
+  const ordered = [];
+  ['part1','part2','part3','part4','part5'].forEach(pk => {
+    if(grouped[pk]) ordered.push(...grouped[pk]);
+  });
+  return ordered;
+}
+
+/* ==========================================================
+   SCREENS
+   ========================================================== */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* ==========================================================
+   COVER
+   ========================================================== */
+const studentNameInput = document.getElementById('studentName');
+const examPasswordInput = document.getElementById('examPassword');
+const startBtn = document.getElementById('startBtn');
+const nameError = document.getElementById('nameError');
+const passwordError = document.getElementById('passwordError');
+const passwordToggle = document.getElementById('passwordToggle');
+
+passwordToggle.addEventListener('click', () => {
+  const isPass = examPasswordInput.type === 'password';
+  examPasswordInput.type = isPass ? 'text' : 'password';
+  passwordToggle.textContent = isPass ? '🙈' : '👁';
+});
+
+function updateAttemptPill(){
+  const attempts = getAttempts();
+  state.attempt = attempts.length + 1;
+  const pill = document.getElementById('attemptPill');
+  if(state.attempt > CONFIG.MAX_ATTEMPTS){
+    pill.textContent = 'MAX ATTEMPTS';
+  } else {
+    pill.textContent = `Attempt ${state.attempt} of ${CONFIG.MAX_ATTEMPTS}`;
+  }
+  const note = document.getElementById('coverAttemptNote');
+  if(state.attempt === 1){
+    note.innerHTML = 'This will be your <strong>1st attempt</strong>.';
+  } else if(state.attempt === 2){
+    note.innerHTML = 'This will be your <strong>2nd attempt</strong>. Your best score is kept.';
+  } else {
+    note.innerHTML = 'You have used both attempts. <strong>See your results below.</strong>';
+  }
+}
+
+startBtn.addEventListener('click', () => {
+  const name = studentNameInput.value.trim();
+  const pass = examPasswordInput.value.trim();
+
+  nameError.classList.remove('show');
+  passwordError.classList.remove('show');
+  studentNameInput.classList.remove('error');
+  examPasswordInput.classList.remove('error');
+
+  let hasError = false;
+  if(!name){ nameError.classList.add('show'); studentNameInput.classList.add('error'); hasError = true; }
+  if(pass !== CONFIG.EXAM_PASSWORD){ passwordError.classList.add('show'); examPasswordInput.classList.add('error'); hasError = true; }
+  if(hasError) return;
+
+  const attempts = getAttempts();
+  if(attempts.length >= CONFIG.MAX_ATTEMPTS){
+    showModal({
+      icon: '🔒', title: 'No attempts left',
+      text: 'You have already completed both attempts. Please view your results.',
+      confirmText: 'View Results', confirmClass: 'gold',
+      onConfirm: () => {
+        closeModal();
+        const best = attempts.reduce((a, b) => (a.score > b.score ? a : b));
+        renderResult(best);
+        showScreen('screen-result');
+      }
+    });
+    return;
+  }
+
+  state.studentName = name;
+  state.attempt = attempts.length + 1;
+  startExam();
+});
+
+/* ==========================================================
+   START EXAM
+   ========================================================== */
+function startExam(){
+  state.questions = buildQuestions();
+  state.answers = {};
+  state.currentIndex = 0;
+  state.timeLeft = CONFIG.EXAM_DURATION_MIN * 60;
+  state.startTime = Date.now();
+  state.isFinishing = false;
+
+  document.getElementById('runwayBar').style.display = 'block';
+  document.getElementById('runwayProgress').textContent = `0 / ${state.questions.length}`;
+  updateRunwayProgress();
+  renderCurrentQuestion();
+  showScreen('screen-exam');
+  startTimer();
+  updateAttemptPill();
+}
+
+/* ==========================================================
+   TIMER
+   ========================================================== */
+function startTimer(){
+  clearInterval(state.timerInterval);
+  updateTimerDisplay();
+  state.timerInterval = setInterval(() => {
+    state.timeLeft--;
+    updateTimerDisplay();
+    if(state.timeLeft <= 0){
+      clearInterval(state.timerInterval);
+      finishExam(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(){
+  const display = document.getElementById('timerDisplay');
+  display.textContent = formatTime(state.timeLeft);
+  display.classList.remove('warning', 'danger');
+  if(state.timeLeft <= 60) display.classList.add('danger');
+  else if(state.timeLeft <= 5 * 60) display.classList.add('warning');
+}
+
+/* ==========================================================
+   RENDER QUESTION
+   ========================================================== */
+function updateRunwayProgress(){
+  const total = state.questions.length;
+  const answered = Object.keys(state.answers).filter(k => {
+    const v = state.answers[k];
+    return v !== undefined && v !== null && (typeof v !== 'string' || v.trim() !== '');
+  }).length;
+  const pct = total ? (answered / total) * 100 : 0;
+  document.getElementById('runwayFill').style.width = pct + '%';
+  document.getElementById('runwayPlane').style.left = pct + '%';
+  document.getElementById('runwayProgress').textContent = `${answered} / ${total}`;
+}
+
+function renderCurrentQuestion(){
+  const q = state.questions[state.currentIndex];
+  const container = document.getElementById('examContent');
+  const userAns = state.answers[q.id];
+  const isAnswered = userAns !== undefined && userAns !== null && (typeof userAns !== 'string' || userAns.trim() !== '');
+
+  let bodyHTML = '';
+
+  if(q.type === 'text' || q.type === 'open' || q.type === 'correct'){
+    bodyHTML = `<input type="text" class="open-input" id="textInput" placeholder="Write your answer here..." value="${(userAns||'').replace(/"/g,'&quot;')}" autocomplete="off" style="min-height:auto;">`;
+  } else if(q.type === 'scramble'){
+    const selected = Array.isArray(userAns) ? userAns : [];
+    bodyHTML = `
+      <div class="unscramble-words" id="scramblePool">
+        ${q.shuffledWords.map((w, i) => {
+          const usedCount = selected.filter(s => s === w).length;
+          const totalCount = q.shuffledWords.filter(sw => sw === w).length;
+          const used = usedCount >= totalCount && selected.includes(w) && selected.filter(s => s === w).length >= q.shuffledWords.filter(sw => sw === w).length;
+          return `<span class="scramble-chip" data-word="${w.replace(/"/g,'&quot;')}" data-idx="${i}">${w}</span>`;
+        }).join('')}
+      </div>
+      <div class="scramble-answer ${selected.length ? 'filled' : ''}" id="scrambleAnswer">
+        ${selected.length ? selected.map((w, i) => `<span class="scramble-chip" data-remove="true" data-idx="${i}">${w}</span>`).join('') : '<span class="placeholder">Click the words in the correct order...</span>'}
+      </div>
+    `;
+  } else if(q.type === 'paragraph'){
+    const words = countWords(userAns);
+    const wcClass = words >= CONFIG.MIN_PARAGRAPH_WORDS ? 'ok' : (words > 0 ? 'low' : '');
+    bodyHTML = `
+      <div class="q-instructions">
+        <strong>${q.instructions}</strong>
+        <ul style="margin:10px 0 0 18px;font-weight:500;">
+          ${q.bullets.map(b => `<li style="margin-bottom:4px;">${b}</li>`).join('')}
+        </ul>
+      </div>
+      <textarea class="open-input paragraph" id="paragraphInput" placeholder="Start writing here...">${userAns || ''}</textarea>
+      <div class="word-count">
+        <span>Minimum: <strong>${CONFIG.MIN_PARAGRAPH_WORDS} words</strong></span>
+        <span class="wc-value ${wcClass}">Words: ${words}</span>
+      </div>
+    `;
+  }
+
+  const hintHTML = q.hint ? `<div class="q-hint">💡 ${q.hint}</div>` : '';
+  const passageHTML = q.passage ? `<div class="q-passage">${q.passage}</div>` : '';
+
+  container.innerHTML = `
+    <div class="part-header">
+      <span class="part-pill">${q.partTitle.split('—')[0].trim()}</span>
+      <span class="part-title">${q.partTitle.split('—')[1].trim()}</span>
+    </div>
+    <p class="part-desc">${q.partDesc}</p>
+    <div class="question-card ${isAnswered ? 'answered' : ''}">
+      <span class="q-number">Question ${state.currentIndex + 1} of ${state.questions.length}</span>
+      ${passageHTML}
+      <div class="q-text">${q.q}</div>
+      ${hintHTML}
+      ${bodyHTML}
+    </div>
+  `;
+
+  // Listeners
+  if(q.type === 'text' || q.type === 'open' || q.type === 'correct'){
+    const input = document.getElementById('textInput');
+    input.addEventListener('input', () => {
+      state.answers[q.id] = input.value;
+      container.querySelector('.question-card').classList.toggle('answered', input.value.trim() !== '');
+      updateRunwayProgress();
+      updateNavButtons();
+    });
+    input.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && state.currentIndex < state.questions.length - 1){
+        e.preventDefault();
+        if(input.value.trim()) document.getElementById('nextBtn').click();
+      }
+    });
+  } else if(q.type === 'scramble'){
+    const pool = document.getElementById('scramblePool');
+    const answerBox = document.getElementById('scrambleAnswer');
+
+    function refreshScramble(){
+      const sel = state.answers[q.id] || [];
+      pool.querySelectorAll('.scramble-chip').forEach(chip => {
+        const w = chip.dataset.word;
+        const usedInAnswer = sel.filter(s => s === w).length;
+        const totalAvailable = q.shuffledWords.filter(sw => sw === w).length;
+        chip.classList.toggle('used', usedInAnswer >= totalAvailable);
+      });
+      answerBox.classList.toggle('filled', sel.length > 0);
+      answerBox.innerHTML = sel.length
+        ? sel.map((w, i) => `<span class="scramble-chip" data-remove="true" data-idx="${i}">${w}</span>`).join('')
+        : '<span class="placeholder">Click the words in the correct order...</span>';
+
+      answerBox.querySelectorAll('[data-remove]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const idx = parseInt(chip.dataset.idx);
+          const arr = [...(state.answers[q.id] || [])];
+          arr.splice(idx, 1);
+          state.answers[q.id] = arr;
+          container.querySelector('.question-card').classList.toggle('answered', arr.length > 0);
+          refreshScramble();
+          updateRunwayProgress();
+          updateNavButtons();
+        });
+      });
+    }
+
+    pool.querySelectorAll('.scramble-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        if(chip.classList.contains('used')) return;
+        const w = chip.dataset.word;
+        const arr = [...(state.answers[q.id] || [])];
+        arr.push(w);
+        state.answers[q.id] = arr;
+        container.querySelector('.question-card').classList.add('answered');
+        refreshScramble();
+        updateRunwayProgress();
+        updateNavButtons();
+      });
+    });
+
+    refreshScramble();
+  } else if(q.type === 'paragraph'){
+    const ta = document.getElementById('paragraphInput');
+    const wcEl = ta.parentElement.querySelector('.wc-value');
+    ta.addEventListener('input', () => {
+      state.answers[q.id] = ta.value;
+      const words = countWords(ta.value);
+      wcEl.textContent = `Words: ${words}`;
+      wcEl.classList.remove('ok', 'low');
+      if(words >= CONFIG.MIN_PARAGRAPH_WORDS) wcEl.classList.add('ok');
+      else if(words > 0) wcEl.classList.add('low');
+      container.querySelector('.question-card').classList.toggle('answered', ta.value.trim() !== '');
+      updateRunwayProgress();
+      updateNavButtons();
+    });
+  }
+
+  updateNavButtons();
+}
+
+function updateNavButtons(){
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const total = state.questions.length;
+
+  prevBtn.disabled = state.currentIndex === 0;
+
+  if(state.currentIndex === total - 1){
+    nextBtn.textContent = 'Finish Test ✓';
+    nextBtn.classList.add('finish');
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.classList.remove('finish');
+  }
+
+  const currentQ = state.questions[state.currentIndex];
+  const currentAns = state.answers[currentQ.id];
+  let hasAns = false;
+  if(Array.isArray(currentAns)) hasAns = currentAns.length > 0;
+  else hasAns = !!(currentAns && (typeof currentAns !== 'string' || currentAns.trim() !== ''));
+  nextBtn.disabled = !hasAns;
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if(state.currentIndex > 0){
+    state.currentIndex--;
+    renderCurrentQuestion();
+  }
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  const total = state.questions.length;
+  if(state.currentIndex === total - 1){
+    const answered = Object.keys(state.answers).filter(k => {
+      const v = state.answers[k];
+      if(Array.isArray(v)) return v.length > 0;
+      return v !== undefined && v !== null && (typeof v !== 'string' || v.trim() !== '');
+    }).length;
+    if(answered < total){
+      showModal({
+        icon: '⚠️', title: 'Unanswered questions',
+        text: `You have answered ${answered} of ${total} questions. Do you want to finish anyway?`,
+        confirmText: 'Finish Anyway',
+        onConfirm: () => { closeModal(); finishExam(false); }
+      });
+    } else {
+      showModal({
+        icon: '📩', title: 'Submit your test?',
+        text: 'Once you submit, you cannot go back and change your answers.',
+        confirmText: 'Submit Test', confirmClass: 'gold',
+        onConfirm: () => { closeModal(); finishExam(false); }
+      });
+    }
+  } else {
+    state.currentIndex++;
+    renderCurrentQuestion();
+  }
+});
+
+/* ==========================================================
+   VALIDATION HELPERS
+   ========================================================== */
+function validateText(q, userAns){
+  if(!userAns) return false;
+  const ua = normalize(userAns);
+  if(!ua) return false;
+  const accepted = q.accepted || [q.answer].filter(Boolean);
+  return accepted.some(a => {
+    const na = normalize(a);
+    if(!na) return false;
+    return ua === na || ua.includes(na) || na.includes(ua);
+  });
+}
+
+function validateOpen(q, userAns){
+  if(!userAns || userAns.trim().length < 4) return false;
+  const ua = normalize(userAns);
+  const kws = (q.keywords || []).map(k => normalize(k));
+  if(kws.length === 0) return false;
+  const hits = kws.filter(k => ua.includes(k)).length;
+  return hits >= Math.ceil(kws.length / 2); // al menos la mitad de keywords
+}
+
+function validateCorrect(q, userAns){
+  if(!userAns || userAns.trim().length < 5) return false;
+  const ua = normalize(userAns);
+  const forbidden = (q.forbidden || []).map(f => normalize(f));
+  for(const f of forbidden){
+    if(f && ua.includes(f)) return false;
+  }
+  const kws = (q.keywords || []).map(k => normalize(k));
+  const hits = kws.filter(k => ua.includes(k)).length;
+  return hits >= 1;
+}
+
+function validateScramble(q, userArr){
+  if(!Array.isArray(userArr) || userArr.length === 0) return false;
+  return normalize(userArr.join(' ')) === normalize(q.answer);
+}
+
+/* ==========================================================
+   FINISH EXAM
+   ========================================================== */
+function finishExam(timeUp){
+  if(state.isFinishing) return;
+  state.isFinishing = true;
+  clearInterval(state.timerInterval);
+
+  let correct = 0;
+  const breakdown = {};
+  const totals = {};
+
+  state.questions.forEach(q => {
+    totals[q.partKey] = (totals[q.partKey] || 0) + 1;
+    const userAns = state.answers[q.id];
+    let isCorrect = false;
+
+    if(q.type === 'text') isCorrect = validateText(q, userAns);
+    else if(q.type === 'open') isCorrect = validateOpen(q, userAns);
+    else if(q.type === 'correct') isCorrect = validateCorrect(q, userAns);
+    else if(q.type === 'scramble') isCorrect = validateScramble(q, userAns);
+    else if(q.type === 'paragraph') isCorrect = false; // párrafo se corrige manual
+
+    if(isCorrect){
+      correct++;
+      breakdown[q.partKey] = (breakdown[q.partKey] || 0) + 1;
+    }
+  });
+
+  // El párrafo (parte 5) NO se cuenta para el score automático.
+  // Se muestra como "pending review".
+  const autoTotal = state.questions.length - 1; // sin el paragraph
+  const score = autoTotal > 0 ? Math.round((correct / autoTotal) * 100) : 0;
+
+  const paragraphAnswer = state.answers['w5q1'] || '';
+
+  const attemptData = {
+    name: state.studentName,
+    attempt: state.attempt,
+    correct,
+    total: autoTotal,
+    score,
+    timeUp: !!timeUp,
+    duration: CONFIG.EXAM_DURATION_MIN * 60 - Math.max(0, state.timeLeft),
+    breakdown,
+    totals,
+    paragraph: paragraphAnswer,
+    timestamp: Date.now()
+  };
+
+  saveAttempt(attemptData);
+
+  try{
+    renderResult(attemptData);
+    showScreen('screen-result');
+  }catch(err){
+    console.error('Render error:', err);
+    alert('Error mostrando el resultado. Abre F12 para ver detalles.');
+  }
+}
+
+/* ==========================================================
+   RESULT
+   ========================================================== */
+function getMedalFor(score){
+  if(score >= 90) return { medal: '🥇', label: 'Excellent — Aviation Ready' };
+  if(score >= 75) return { medal: '🥈', label: 'Very Good — Clear Writer' };
+  if(score >= 60) return { medal: '🥉', label: 'Good — Keep Practicing' };
+  return { medal: '📘', label: 'Needs Improvement' };
+}
+
+function partLabel(key){
+  const map = {
+    part1: 'Part 1 · Complete the Sentence',
+    part2: 'Part 2 · Unscramble',
+    part3: 'Part 3 · Short Answer',
+    part4: 'Part 4 · Correct the Mistake',
+    part5: 'Part 5 · Write a Paragraph'
+  };
+  return map[key] || key;
+}
+
+function renderResult(attemptData){
+  const { medal, label } = getMedalFor(attemptData.score);
+  const bpBody = document.getElementById('bpBody');
+
+  const rows = Object.keys(attemptData.totals).map(key => {
+    const got = attemptData.breakdown[key] || 0;
+    const max = attemptData.totals[key] || 0;
+    const isParagraph = key === 'part5';
+    return `
+      <div class="bp-detail-row">
+        <span class="bp-detail-label">${partLabel(key)}</span>
+        <span class="bp-detail-value">${isParagraph ? '⏳ Pending' : `${got} / ${max}`}</span>
+      </div>
+    `;
+  }).join('');
+
+  bpBody.innerHTML = `
+    <div class="bp-score-section">
+      <div class="bp-medal">${medal}</div>
+      <div class="bp-medal-label">${label}</div>
+      <div class="bp-score-big">${attemptData.score}%</div>
+      <div class="bp-score-sub">${attemptData.correct} / ${attemptData.total} auto-graded correct</div>
+    </div>
+    <div class="bp-details">
+      ${rows}
+      <div class="bp-note">
+        <strong>📝 Note:</strong> Part 5 (the paragraph) is NOT included in the automatic score.
+        Your teacher will grade it manually. Download the result to send your paragraph.
+      </div>
+      <div class="bp-name-row">
+        <div>
+          <div class="bp-name-label">Student Name</div>
+          <div class="bp-name-value">${attemptData.name}</div>
+        </div>
+        <div>
+          <div class="bp-name-label">Attempt</div>
+          <div class="bp-name-value">${attemptData.attempt} of ${CONFIG.MAX_ATTEMPTS}</div>
+        </div>
+        <div>
+          <div class="bp-name-label">Time Used</div>
+          <div class="bp-name-value">${formatTime(attemptData.duration)}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  renderResultActions(attemptData);
+  renderAttemptsHistory();
+}
+
+function renderResultActions(attemptData){
+  const actions = document.getElementById('resultActions');
+  const attempts = getAttempts();
+  const canRetry = attempts.length < CONFIG.MAX_ATTEMPTS;
+
+  let html = `<button class="btn-primary" id="downloadBtn" style="flex:1 1 200px;">⬇ Download Result</button>`;
+  if(canRetry){
+    html += `<button class="btn-nav primary" id="retryBtn" style="flex:1 1 200px;padding:16px;">🔁 Try 2nd Attempt</button>`;
+  } else {
+    html += `<button class="btn-nav" id="restartBtn" style="flex:1 1 200px;padding:16px;">🔄 Start Over</button>`;
+  }
+  actions.innerHTML = html;
+
+  document.getElementById('downloadBtn').addEventListener('click', () => downloadResult(attemptData));
+
+  const retryBtn = document.getElementById('retryBtn');
+  if(retryBtn){
+    retryBtn.addEventListener('click', () => {
+      showScreen('screen-cover');
+      studentNameInput.value = attemptData.name;
+      examPasswordInput.value = '';
+      document.getElementById('runwayBar').style.display = 'none';
+      updateAttemptPill();
+    });
+  }
+
+  const restartBtn = document.getElementById('restartBtn');
+  if(restartBtn){
+    restartBtn.addEventListener('click', () => {
+      showModal({
+        icon: '🔄', title: 'Start Over?',
+        text: 'This will clear all saved attempts and reset the test.',
+        confirmText: 'Reset All',
+        onConfirm: () => {
+          localStorage.removeItem(CONFIG.STORAGE_KEY);
+          closeModal();
+          location.reload();
+        }
+      });
+    });
+  }
+}
+
+function renderAttemptsHistory(){
+  const attempts = getAttempts();
+  const box = document.getElementById('attemptsHistory');
+  if(attempts.length === 0){ box.innerHTML = ''; return; }
+
+  const best = Math.max(...attempts.map(a => a.score));
+  const rows = attempts.map(a => {
+    const isBest = a.score === best;
+    return `
+      <div class="attempt-row">
+        <span>Attempt ${a.attempt} — ${a.correct}/${a.total} auto-graded ${isBest ? '<span class="best-tag">BEST</span>' : ''}</span>
+        <span>${a.score}%</span>
+      </div>
+    `;
+  }).join('');
+
+  box.innerHTML = `<h4>Attempts History</h4>${rows}`;
+}
+
+/* ==========================================================
+   DOWNLOAD RESULT (incluye el párrafo)
+   ========================================================== */
+function downloadResult(attemptData){
+  const lines = [];
+  lines.push('======================================');
+  lines.push('  PICKEN-GLISH AVIATION');
+  lines.push('  OACI ESL Level 1 — WRITING TEST');
+  lines.push('======================================');
+  lines.push('');
+  lines.push(`Student Name : ${attemptData.name}`);
+  lines.push(`Attempt      : ${attemptData.attempt} of ${CONFIG.MAX_ATTEMPTS}`);
+  lines.push(`Date         : ${new Date(attemptData.timestamp).toLocaleString()}`);
+  lines.push(`Time Used    : ${formatTime(attemptData.duration)}`);
+  lines.push('');
+  lines.push('--- AUTO-GRADED SCORE ---');
+  lines.push(`Final Score  : ${attemptData.score}%`);
+  lines.push(`Correct      : ${attemptData.correct} / ${attemptData.total}`);
+  lines.push('');
+  lines.push('--- BREAKDOWN BY PART ---');
+  Object.keys(attemptData.totals).forEach(key => {
+    const got = attemptData.breakdown[key] || 0;
+    const max = attemptData.totals[key] || 0;
+    const isPara = key === 'part5';
+    lines.push(`${partLabel(key).padEnd(38)} ${isPara ? 'PENDING' : `${got} / ${max}`}`);
+  });
+  lines.push('');
+  lines.push('======================================');
+  lines.push('  PART 5 — STUDENT PARAGRAPH (TO GRADE)');
+  lines.push('======================================');
+  lines.push('');
+  const para = (attemptData.paragraph || '').trim();
+  const paraWords = countWords(para);
+  lines.push(`Word Count: ${paraWords} (minimum: ${CONFIG.MIN_PARAGRAPH_WORDS})`);
+  lines.push('');
+  if(para){
+    lines.push(para);
+  } else {
+    lines.push('(No paragraph was submitted.)');
+  }
+  lines.push('');
+  lines.push('======================================');
+  lines.push('  Keep flying high! ✈');
+  lines.push('======================================');
+
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const safeName = attemptData.name.replace(/[^a-z0-9]/gi, '_');
+  a.download = `Picken-glish_Writing_${safeName}_Attempt${attemptData.attempt}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ==========================================================
+   MODAL
+   ========================================================== */
+function showModal({ icon, title, text, confirmText = 'Confirm', confirmClass = '', onConfirm }){
+  document.getElementById('modalIcon').textContent = icon || '⚠️';
+  document.getElementById('modalTitle').textContent = title || 'Are you sure?';
+  document.getElementById('modalText').textContent = text || '';
+  const btn = document.getElementById('modalConfirm');
+  btn.textContent = confirmText;
+  btn.className = 'modal-confirm' + (confirmClass ? ' ' + confirmClass : '');
+  btn.onclick = onConfirm;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+document.getElementById('modalCancel').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if(e.target.id === 'modalOverlay') closeModal();
+});
+
+/* ==========================================================
+   INIT
+   ========================================================== */
+document.getElementById('year').textContent = new Date().getFullYear();
+updateAttemptPill();
+</script>
+</body>
+</html>
